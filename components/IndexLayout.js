@@ -29,9 +29,9 @@ const IndexLayout = ({ children }) => {
           </Menu.Item>
         </Menu>
       </Col>
-      <Col span={6}>공백</Col>
+      <Col span={6}></Col>
       <Col span={12}>{children}</Col>
-      <Col span={6}>공백</Col>
+      <Col span={6}></Col>
     </Row>
   );
 };
