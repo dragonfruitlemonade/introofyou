@@ -12,15 +12,16 @@ import { Card, Popover, Button, Avatar, List, Comment } from "antd";
 const PostCard = () => {
   const [commentFormOpened, setCommentFormOpened] = useState(false);
 
+  const onToggleComment = useCallback(() => {
+    setCommentFormOpened((prev) => !prev);
+  }, []);
+
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
         actions={[
-          <FireTwoTone
-            twoToneColor="#cc0000"
-            key="heart"
-          />,
-          <MessageOutlined key="comment" />,
+          <FireTwoTone twoToneColor="#cc0000" key="heart" />,
+          <MessageOutlined key="comment" onClick={onToggleComment} />,
           <ArrowDownOutlined />,
           <Popover
             key="more"
@@ -38,6 +39,23 @@ const PostCard = () => {
       >
         <Card.Meta avatar={<Avatar>1</Avatar>} />
       </Card>
+      {commentFormOpened && (
+        <div>
+          <CommentForm post={post} />
+          <List
+            itemLayout="horizontal"
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author="sehwan"
+                  avatar={<Avatar>S</Avatar>}
+                  content="잘좀하자"
+                />
+              </li>
+            )}
+          />
+        </div>
+      )}
     </div>
   );
 };
