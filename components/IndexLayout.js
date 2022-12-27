@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Col, Row, Menu, Layout } from 'antd';
 
 const IndexLayout = ({ children }) => {
+  const me = false;
   return (
     <Row>
       <Col span={20}>
@@ -20,14 +21,25 @@ const IndexLayout = ({ children }) => {
         </Menu>
       </Col>
       <Col span={4}>
-        <Menu mode="horizontal" style={{ alignItems: "center" }}>
-          <Menu.Item key="login">
-            <Link href="/login">로그인</Link>
-          </Menu.Item>
-          <Menu.Item key="signup">
-            <Link href="/signup">회원가입</Link>
-          </Menu.Item>
-        </Menu>
+        {me ? (
+          <Menu mode="horizontal" style={{ alignItems: "center" }}>
+            <Menu.Item key="login">
+              <Link href="/login">로그인</Link>
+            </Menu.Item>
+            <Menu.Item key="signup">
+              <Link href="/signup">회원가입</Link>
+            </Menu.Item>
+          </Menu>
+        ) : (
+          <Menu mode="horizontal">
+            <Menu.Item key="login">
+              <Link href="/login">로그아웃</Link>
+            </Menu.Item>
+            <Menu.Item key="signup">
+              <Link href="/signup">내 프로필</Link>
+            </Menu.Item>
+          </Menu>
+        )}
       </Col>
       <Col span={6}></Col>
       <Col span={12}>{children}</Col>
