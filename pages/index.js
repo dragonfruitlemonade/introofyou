@@ -1,8 +1,12 @@
 import React from 'react';
 
+import IndexLayout from '../components/IndexLayout';
+
 const Home = () => {
   return (
-    <div>메인</div>
+    <IndexLayout>
+      <div>메인</div>
+    </IndexLayout>
   );
 };
 
