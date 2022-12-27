@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   FireOutlined,
+  FireTwoTone,
   MessageOutlined,
   EllipsisOutlined,
-  FireTwoTone,
+  ArrowDownOutlined,
 } from "@ant-design/icons";
 import { Card, Popover, Button, Avatar, List, Comment } from "antd";
 
@@ -20,6 +21,7 @@ const PostCard = () => {
             key="heart"
           />,
           <MessageOutlined key="comment" />,
+          <ArrowDownOutlined />,
           <Popover
             key="more"
             content={
