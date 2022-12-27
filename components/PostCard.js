@@ -9,6 +9,8 @@ import {
 } from "@ant-design/icons";
 import { Card, Popover, Button, Avatar, List, Comment } from "antd";
 
+import CommentForm from "./CommentForm";
+
 const PostCard = () => {
   const [commentFormOpened, setCommentFormOpened] = useState(false);
 
@@ -41,7 +43,7 @@ const PostCard = () => {
       </Card>
       {commentFormOpened && (
         <div>
-          <CommentForm post={post} />
+          <CommentForm />
           <List
             itemLayout="horizontal"
             renderItem={(item) => (
