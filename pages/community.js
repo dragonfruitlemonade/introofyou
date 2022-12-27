@@ -1,15 +1,14 @@
 import React from "react";
 import IndexLayout from "../components/IndexLayout";
-import { Form, Input, Button } from "antd";
 
 import PostCard from "../components/PostCard";
-
+import PostForm from "../components/PostForm";
 
 const Community = () => {
 
   return (
     <IndexLayout>
-      <Button href="write">글쓰기</Button>
+      <PostForm />
       <PostCard />
     </IndexLayout>
   );
