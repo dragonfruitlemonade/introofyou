@@ -1,15 +1,28 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Form, Input, Button } from "antd";
+import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
+import HEAD from 'next/head';
 
 import IndexLayout from "../components/IndexLayout";
 import useInput from "../hooks/useInput";
+import { SIGN_UP_REQUEST } from "../reducers/user";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const { me, signUpLoading } = useSelector((state) => state.user);
 
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+
+  useEffect(() => {
+    if (me) {
+      alert('잘못된 접근입니다.');
+      Router.push('/');
+    }
+  }, [me && me.id]);
 
   const onChangePasswordCheck = useCallback(
     (e) => {
@@ -24,6 +37,13 @@ const Signup = () => {
       return setPasswordError(true);
     }
 
+    return dispatch({
+      type: SIGN_UP_REQUEST,
+      data: {
+        email,
+        password,
+      },
+    });
   }, [email, password, passwordCheck]);
 
   return (
@@ -66,7 +86,7 @@ const Signup = () => {
           )}
         </div>
         <div style={{ marginTop: 10 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={signUpLoading}>
             가입하기
           </Button>
         </div>
