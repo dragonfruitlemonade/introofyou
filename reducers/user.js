@@ -13,7 +13,7 @@ export const initialState = {
   signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
-  me: true,
+  me: null,
 };
 
 export const LOAD_MY_INFO_REQUEST = "LOAD_MY_INFO_REQUEST";
