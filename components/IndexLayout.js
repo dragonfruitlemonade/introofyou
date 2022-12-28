@@ -2,9 +2,10 @@ import React from 'react';
 import propTypes from 'prop-types';
 import Link from 'next/link';
 import { Col, Row, Menu, Layout } from 'antd';
+import { useSelector } from 'react-redux'
 
 const IndexLayout = ({ children }) => {
-  const me = false;
+  const { me } = useSelector((state) => state.user);
   return (
     <Row>
       <Col span={20}>
@@ -24,19 +25,19 @@ const IndexLayout = ({ children }) => {
         {me ? (
           <Menu mode="horizontal" style={{ alignItems: "center" }}>
             <Menu.Item key="login">
-              <Link href="/login">로그인</Link>
+              <Link href="/login">로그아웃</Link>
             </Menu.Item>
             <Menu.Item key="signup">
-              <Link href="/signup">회원가입</Link>
+              <Link href="/signup">내 프로필</Link>
             </Menu.Item>
           </Menu>
         ) : (
           <Menu mode="horizontal">
             <Menu.Item key="login">
-              <Link href="/login">로그아웃</Link>
+              <Link href="/login">로그인</Link>
             </Menu.Item>
             <Menu.Item key="signup">
-              <Link href="/signup">내 프로필</Link>
+              <Link href="/signup">회원가입</Link>
             </Menu.Item>
           </Menu>
         )}
