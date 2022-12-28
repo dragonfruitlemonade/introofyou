@@ -31,6 +31,7 @@ const Login = () => {
           <br />
           <Input
             name="user-email"
+            type="email"
             value={email}
             onChange={onChangeEmail}
             required
