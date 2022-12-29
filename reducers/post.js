@@ -79,7 +79,6 @@ const dummyPost = (data) => ({
     id: 1,
     nickname: "제로초",
   },
-  Images: [],
   Comments: [],
 });
 
