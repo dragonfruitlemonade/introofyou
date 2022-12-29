@@ -36,12 +36,12 @@ const IndexLayout = ({ children }) => {
         {me ? (
           <Menu mode="horizontal" style={{ alignItems: "center" }}>
             <Menu.Item key="login">
-              <Button onClick={onLogout} loading={logOutLoading}>
+              <div onClick={onLogout} loading={logOutLoading}>
                 로그아웃
-              </Button>
+              </div>
             </Menu.Item>
-            <Menu.Item key="signup">
-              <Link href="/signup">내 프로필</Link>
+            <Menu.Item key="profile">
+              <Link href="/profile">내 프로필</Link>
             </Menu.Item>
           </Menu>
         ) : (
