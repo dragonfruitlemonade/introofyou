@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
+import { useState, useCallback, useEffect } from "react";
+
 import { Form, Input, Button } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
-import HEAD from 'next/head';
 
 import IndexLayout from "../components/IndexLayout";
 import useInput from "../hooks/useInput";
