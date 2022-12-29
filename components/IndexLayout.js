@@ -1,11 +1,22 @@
 import React from 'react';
+import { useCallback } from 'react';
 import propTypes from 'prop-types';
 import Link from 'next/link';
-import { Col, Row, Menu, Layout } from 'antd';
-import { useSelector } from 'react-redux'
+import { Col, Row, Menu, Button } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { LOG_OUT_REQUEST } from '../reducers/user';
 
 const IndexLayout = ({ children }) => {
-  const { me } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { me, logOutLoading } = useSelector((state) => state.user);
+
+  const onLogout = useCallback(() => {
+    dispatch({
+      type: LOG_OUT_REQUEST,
+    });
+  }, []);
+
   return (
     <Row>
       <Col span={20}>
@@ -25,7 +36,9 @@ const IndexLayout = ({ children }) => {
         {me ? (
           <Menu mode="horizontal" style={{ alignItems: "center" }}>
             <Menu.Item key="login">
-              <Link href="/login">로그아웃</Link>
+              <Button onClick={onLogout} loading={logOutLoading}>
+                로그아웃
+              </Button>
             </Menu.Item>
             <Menu.Item key="signup">
               <Link href="/signup">내 프로필</Link>
