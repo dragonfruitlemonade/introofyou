@@ -1,4 +1,4 @@
-import { all, fork, put, takeLatest, call } from "redux-saga/effects";
+import { all, delay, fork, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 import {
@@ -11,42 +11,23 @@ import {
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
-  LOAD_MY_INFO_REQUEST,
-  LOAD_MY_INFO_SUCCESS,
-  LOAD_MY_INFO_FAILURE,
 } from "../reducers/user";
 
-function loadMyInfoAPI() {
-  return axios.get("/user");
-}
-
-function* loadMyInfo(action) {
-  try {
-    // const result = yield call(loadMyInfoAPI, action.data);
-    yield put({
-      type: LOAD_MY_INFO_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: LOAD_MY_INFO_FAILURE,
-      error: err.response.data,
-    });
-  }
-}
-
 function logInAPI(data) {
-  return axios.post("/user/login", data);
+  return axios.post("/api/login", data);
 }
 
 function* logIn(action) {
   try {
-    // const result = yield call(logInAPI, action.data);
+    console.log("saga logIn");
+    // const result = yield call(logInAPI);
+    yield delay(1000);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: result.data,
+      data: action.data,
     });
   } catch (err) {
+    console.error(err);
     yield put({
       type: LOG_IN_FAILURE,
       error: err.response.data,
@@ -55,12 +36,13 @@ function* logIn(action) {
 }
 
 function logOutAPI() {
-  return axios.post("/user/logout");
+  return axios.post("/api/logout");
 }
 
 function* logOut() {
   try {
-    // yield call(logOutAPI);
+    // const result = yield call(logOutAPI);
+    yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -73,13 +55,14 @@ function* logOut() {
   }
 }
 
-function signUpAPI(data) {
-  return axios.post("/user", data);
+function signUpAPI() {
+  return axios.post("/api/signUp");
 }
 
-function* signUp(action) {
+function* signUp() {
   try {
-    // const result = yield call(signUpAPI, action.data);
+    // const result = yield call(signUpAPI);
+    yield delay(1000);
     yield put({
       type: SIGN_UP_SUCCESS,
     });
@@ -90,10 +73,6 @@ function* signUp(action) {
       error: err.response.data,
     });
   }
-}
-
-function* watchLoadMyInfo() {
-  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
 }
 
 function* watchLogIn() {
@@ -110,7 +89,6 @@ function* watchSignUp() {
 
 export default function* userSaga() {
   yield all([
-    fork(watchLoadMyInfo),
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchSignUp),
