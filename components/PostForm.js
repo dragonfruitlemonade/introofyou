@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
+import { useDispatch, useSelector } from 'react-redux';
 
+import { addPost, ADD_POST_REQUEST } from "../reducers/post";
 import useInput from "../hooks/useInput";
 
 const PostForm = () => {
+  const dispatch = useDispatch();
   const [text, onChangeText, setText] = useInput("");
+  const { addPostDone } = useSelector((state) => state.post);
 
   const [term, setTerm] = useState("");
   const [termError, setTermError] = useState(false);
@@ -12,6 +16,12 @@ const PostForm = () => {
     setTerm(e.target.checked);
     setTermError(false);
   }, []);
+
+  useEffect(() => {
+    if (addPostDone) {
+      setText("");
+    }
+  }, [addPostDone]);
 
   const onSubmit = useCallback(() => {
     if (!text || !text.trim()) {
@@ -21,6 +31,13 @@ const PostForm = () => {
     if (!term) {
       return alert("자기소개서를 첨부해주세요.");
     }
+
+    const formData = new FormData();
+    formData.append("content", text);
+    return dispatch({
+      type: ADD_POST_REQUEST,
+      data: formData,
+    });
   }, [text, term]);
 
   return (
