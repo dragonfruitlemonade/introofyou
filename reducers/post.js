@@ -79,7 +79,15 @@ const dummyPost = (data) => ({
     id: 1,
     nickname: "제로초",
   },
-  Comments: [],
+  Comments: [
+    {
+      User: {
+        id: shortId.generate(),
+        nickname: faker.name.findName(),
+      },
+      content: faker.lorem.sentence(),
+    },
+  ],
 });
 
 const dummyComment = (data) => ({
