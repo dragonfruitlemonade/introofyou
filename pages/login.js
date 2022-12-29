@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
+import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import useInput from "../hooks/useInput";
@@ -18,7 +19,7 @@ const FormWrapper = styled(Form)`
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { logInLoading } = useSelector((state) => state.user);
+  const { me, logInLoading } = useSelector((state) => state.user);
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 
@@ -29,6 +30,12 @@ const Login = () => {
       data: { email, password },
     });
   }, [email, password]);
+
+  useEffect(() => {
+    if (me) {
+      Router.push("/");
+    }
+  }, [me && me.id]);
 
   return (
     <IndexLayout>
