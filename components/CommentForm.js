@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect } from "react";
-import { Button, Form, Input } from "antd";
-import PropTypes from "prop-types";
+import React, { useCallback, useEffect } from 'react';
+import { Button, Form, Input } from 'antd';
+import PropTypes from 'prop-types';
 
-import useInput from "../hooks/useInput";
+import useInput from '../hooks/useInput';
 
 const CommentForm = () => {
   const [commentText, onChangeCommentText, setCommentText] = useInput("");
