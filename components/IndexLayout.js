@@ -19,7 +19,8 @@ const IndexLayout = ({ children }) => {
 
   return (
     <Row>
-      <Col span={20}>
+      <Col span={4}></Col>
+      <Col span={12}>
         <Menu mode="horizontal" style={{ alignItems: "center" }}>
           <Menu.Item>
             <Link href="/">인트로오브유</Link>
@@ -55,9 +56,10 @@ const IndexLayout = ({ children }) => {
           </Menu>
         )}
       </Col>
-      <Col span={6}></Col>
-      <Col span={12}>{children}</Col>
-      <Col span={6}></Col>
+      <Col span={4}></Col>
+      <Col span={4}></Col>
+      <Col span={16}>{children}</Col>
+      <Col span={4}></Col>
     </Row>
   );
 };
