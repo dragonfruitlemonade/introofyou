@@ -20,7 +20,7 @@ const IndexLayout = ({ children }) => {
   return (
     <Row>
       <Col span={4}></Col>
-      <Col span={12}>
+      <Col span={12} defaultChecked>
         <Menu mode="horizontal" style={{ alignItems: "center" }}>
           <Menu.Item>
             <Link href="/">인트로오브유</Link>
