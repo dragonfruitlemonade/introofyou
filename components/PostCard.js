@@ -11,11 +11,13 @@ import {
 import { Card, Popover, Button, Avatar, List, Comment } from "antd";
 
 import CommentForm from "./CommentForm";
+import IntroPreview from "./IntroPreview";
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
+  const [previewOpened, setPreviewOpened] = useState(false);
   const { removePostLoading } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
   const id = me && me.id;
@@ -26,6 +28,10 @@ const PostCard = ({ post }) => {
 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prev) => !prev);
+  }, []);
+
+  const onTogglePreview = useCallback(() => {
+    setPreviewOpened((prev) => !prev);
   }, []);
 
   const onRemovePost = useCallback(() => {
@@ -49,7 +55,7 @@ const PostCard = ({ post }) => {
             <FireOutlined key="heart" onClick={onToggleLike} />
           ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
-          <ArrowDownOutlined />,
+          <ArrowDownOutlined key="preview" onClick={onTogglePreview} />,
           <Popover
             key="more"
             content={
@@ -81,23 +87,28 @@ const PostCard = ({ post }) => {
         />
       </Card>
       {commentFormOpened && (
-          <div>
-            <CommentForm post={post} />
-            <List
-              header={`${post.Comments.length}개의 댓글`}
-              itemLayout="horizontal"
-              dataSource={post.Comments}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    author={item.User.nickname}
-                    avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
-                    content={item.content}
-                  />
-                </List.Item>
-              )}
-            />
-          </div>
+        <div>
+          <CommentForm post={post} />
+          <List
+            header={`${post.Comments.length}개의 댓글`}
+            itemLayout="horizontal"
+            dataSource={post.Comments}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta
+                  author={item.User.nickname}
+                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  content={item.content}
+                />
+              </List.Item>
+            )}
+          />
+        </div>
+      )}
+      {previewOpened && (
+        <div>
+          <IntroPreview />
+        </div>
       )}
     </div>
   );
