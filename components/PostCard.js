@@ -88,13 +88,13 @@ const PostCard = ({ post }) => {
               itemLayout="horizontal"
               dataSource={post.Comments}
               renderItem={(item) => (
-                <li>
-                  <Comment
+                <List.Item>
+                  <List.Item.Meta
                     author={item.User.nickname}
                     avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
                     content={item.content}
                   />
-                </li>
+                </List.Item>
               )}
             />
           </div>
