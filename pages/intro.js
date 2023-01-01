@@ -1,26 +1,19 @@
 import React from "react";
 import { useCallback } from "react";
-import { Form, Input, Button, Checkbox, Select, Row, Col, DatePicker, Header } from "antd";
-import {
-  Cascader,
-  InputNumber,
-  Radio,
-  Switch,
-  TreeSelect,
-} from "antd";
+import { Form, Input, Button, Select, Row, Col } from "antd";
 
 const { Option } = Select;
 import IndexLayout from "../components/IndexLayout";
 
 
 const Intro = () => {
-  const onChange = (date, dateString) => {
-    console.log(dateString);
+  const onFinish = (values) => {
+    console.log(values);
   };
 
   return (
     <IndexLayout>
-      <Form style={{ padding: 10 }}>
+      <Form style={{ padding: 10 }} onFinish={onFinish}>
         <Row>
           <Col span={11}>
             지원분야
@@ -102,7 +95,9 @@ const Intro = () => {
             <hr />
             <Input.TextArea />
           </Col>
-          <Col span={24}><br /></Col>
+          <Col span={24}>
+            <br />
+          </Col>
           <Button type="primary" htmlType="submit">
             저장하기
           </Button>
