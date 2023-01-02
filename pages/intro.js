@@ -1,15 +1,78 @@
 import React from "react";
-import { useCallback } from "react";
-import { Form, Input, Button, Select, Row, Col } from "antd";
+import { useCallback, useEffect } from "react";
+import Router from "next/router"
+import { Form, Input, Button, Row, Col } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
-const { Option } = Select;
 import IndexLayout from "../components/IndexLayout";
+import useInput from "../hooks/useInput";
+import { INTRO_WRITE_REQUEST } from "../reducers/user";
 
 
 const Intro = () => {
-  const onFinish = (values) => {
-    console.log(values);
-  };
+  const disptach = useDispatch();
+  const { me, introWriteLoading } = useSelector((state) => state.user);
+  const [field, onChangeField] = useInput("");
+  const [major, onChangeMajor] = useInput("");
+  const [job, onChangeJob] = useInput("");
+  const [call, onChangeCall] = useInput("");
+  const [income, onChangeIncome] = useInput("");
+  const [portfolio, onChangePortfolio] = useInput("");
+  const [academic, onChangeAcademic] = useInput("");
+  const [sentence, onChangeSentence] = useInput("");
+  const [skill, onChangeSkill] = useInput("");
+  const [reason, onChangeReason] = useInput("");
+  const [other, onChangeOther] = useInput("");
+
+  useEffect(() => {
+    if (!(me && me.id)) {
+      Router.replace("/");
+    }
+  }, [me && me.id]);
+
+  const onFinish = useCallback(() => {
+    console.log(
+      field,
+      major,
+      job,
+      call,
+      income,
+      portfolio,
+      academic,
+      sentence,
+      skill,
+      reason,
+      other
+    );
+    disptach({
+      type: INTRO_WRITE_REQUEST,
+      data: {
+        field,
+        major,
+        job,
+        call,
+        income,
+        portfolio,
+        academic,
+        sentence,
+        skill,
+        reason,
+        other,
+      },
+    });
+  }, [
+    field,
+    major,
+    job,
+    call,
+    income,
+    portfolio,
+    academic,
+    sentence,
+    skill,
+    reason,
+    other,
+  ]);
 
   return (
     <IndexLayout>
@@ -153,7 +216,7 @@ const Intro = () => {
           <Col span={24}>
             <br />
           </Col>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={introWriteLoading}>
             저장하기
           </Button>
         </Row>
