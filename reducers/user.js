@@ -10,10 +10,21 @@ export const initialState = {
   signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
+  introWriteLoading: false, // 회원가입 시도중
+  introWriteDone: false,
+  introWriteError: null,
+  loadPreviewLoading: false, // 회원가입 시도중
+  loadPreviewDone: false,
+  loadPreviewError: null,
   me: null,
+  myIntroData: {},
   signUpData: {},
   loginData: {},
 };
+
+export const INTRO_WRITE_REQUEST = "INTRO_WRITE_REQUEST";
+export const INTRO_WRITE_SUCCESS = "INTRO_WRITE_SUCCESS";
+export const INTRO_WRITE_FAILURE = "INTRO_WRITE_FAILURE";
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
@@ -48,6 +59,19 @@ export const logoutRequestAction = () => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case INTRO_WRITE_REQUEST:
+        draft.introWriteLoading = true;
+        draft.introWriteError = null;
+        draft.introWriteDone = false;
+        break;
+      case INTRO_WRITE_SUCCESS:
+        draft.introWriteLoading = false;
+        draft.introWriteDone = true;
+        break;
+      case INTRO_WRITE_FAILURE:
+        draft.introWriteLoading = false;
+        draft.introWriteError = action.error;
+        break;
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
         draft.logInError = null;

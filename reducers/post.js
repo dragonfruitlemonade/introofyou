@@ -29,7 +29,7 @@ export const generateDummyPost = (number) =>
         id: shortId.generate(),
         nickname: faker.name.findName(),
       },
-      content: faker.lorem.paragraph(),
+      content: "power",
       Images: [
         {
           src: faker.image.image(),
@@ -41,7 +41,7 @@ export const generateDummyPost = (number) =>
             id: shortId.generate(),
             nickname: faker.name.findName(),
           },
-          content: faker.lorem.sentence(),
+          content: "예아",
         },
       ],
     }));
@@ -85,7 +85,7 @@ const dummyPost = (data) => ({
         id: shortId.generate(),
         nickname: faker.name.findName(),
       },
-      content: faker.lorem.sentence(),
+      content: "power",
     },
   ],
 });
@@ -97,6 +97,15 @@ const dummyComment = (data) => ({
     id: 1,
     nickname: "제로초",
   },
+  Comments: [
+    {
+      User: {
+        id: shortId.generate(),
+        nickname: faker.name.findName(),
+      },
+      content: "power",
+    },
+  ],
 });
 
 const reducer = (state = initialState, action) =>
