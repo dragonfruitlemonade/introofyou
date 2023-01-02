@@ -23,7 +23,7 @@ const Intro = () => {
   const [skill, onChangeSkill] = useInput("");
   const [reason, onChangeReason] = useInput("");
   const [other, onChangeOther] = useInput("");
-
+  
   useEffect(() => {
     if (!(me && me.id)) {
       Router.replace("/");
