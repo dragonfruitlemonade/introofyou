@@ -11,7 +11,31 @@ import {
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
+  INTRO_WRITE_REQUEST,
+  INTRO_WRITE_SUCCESS,
+  INTRO_WRITE_FAILURE,
 } from "../reducers/user";
+
+function introWriteAPI(data) {
+  return axios.post("/api/login", data);
+}
+
+function* introWrite(action) {
+  try {
+    // const result = yield call(introWriteAPI);
+    yield delay(1000);
+    yield put({
+      type: INTRO_WRITE_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: INTRO_WRITE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function logInAPI(data) {
   return axios.post("/api/login", data);
@@ -75,6 +99,10 @@ function* signUp() {
   }
 }
 
+function* watchIntroWrite() {
+  yield takeLatest(INTRO_WRITE_REQUEST, introWrite);
+}
+
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -92,5 +120,6 @@ export default function* userSaga() {
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchSignUp),
+    fork(watchIntroWrite),
   ]);
 }
