@@ -26,6 +26,10 @@ export const INTRO_WRITE_REQUEST = "INTRO_WRITE_REQUEST";
 export const INTRO_WRITE_SUCCESS = "INTRO_WRITE_SUCCESS";
 export const INTRO_WRITE_FAILURE = "INTRO_WRITE_FAILURE";
 
+export const LOAD_PREVIEW_REQUEST = "LOAD_PREVIEW_REQUEST";
+export const LOAD_PREVIEW_SUCCESS = "LOAD_PREVIEW_SUCCESS";
+export const LOAD_PREVIEW_FAILURE = "LOAD_PREVIEW_FAILURE";
+
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
 export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
@@ -59,6 +63,19 @@ export const logoutRequestAction = () => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_PREVIEW_REQUEST:
+        draft.loadPreviewLoading = true;
+        draft.loadPreviewError = null;
+        draft.loadPreviewDone = false;
+        break;
+      case LOAD_PREVIEW_SUCCESS:
+        draft.loadPreviewLoading = false;
+        draft.loadPreviewDone = true;
+        break;
+      case LOAD_PREVIEW_FAILURE:
+        draft.loadPreviewLoading = false;
+        draft.loadPreviewError = action.error;
+        break;
       case INTRO_WRITE_REQUEST:
         draft.introWriteLoading = true;
         draft.introWriteError = null;
