@@ -20,15 +20,27 @@ const PostCard = ({ post }) => {
   const [previewOpened, setPreviewOpened] = useState(false);
   const { removePostLoading } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
-  const id = me && me.id;
+  const id = useSelector((state) => state.user.me && state.user.me.id);
 
-  const onToggleLike = useCallback(() => {
-    setLiked((prev) => !prev);
-  }, []);
+  const onLike = useCallback(() => {
+    if (!id) {
+      return alert("로그인이 필요하다.");
+    }
+    return dispatch({
+      type: LIKE_POST_REQUEST,
+      data: post.id,
+    });
+  }, [id]);
 
-  const onToggleComment = useCallback(() => {
-    setCommentFormOpened((prev) => !prev);
-  }, []);
+  const onUnLike = useCallback(() => {
+    if (!id) {
+      return alert("로그인이 필요하다.");
+    }
+    return dispatch({
+      type: UNLIKE_POST_REQUEST,
+      data: post.id,
+    });
+  }, [id]);
 
   const onTogglePreview = useCallback(() => {
     setPreviewOpened((prev) => !prev);
@@ -49,10 +61,10 @@ const PostCard = ({ post }) => {
             <FireTwoTone
               twoToneColor="#cc0000"
               key="heart"
-              onClick={onToggleLike}
+              onClick={onUnLike}
             />
           ) : (
-            <FireOutlined key="heart" onClick={onToggleLike} />
+            <FireOutlined key="heart" onClick={onLike} />
           ),
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <ArrowDownOutlined key="preview" onClick={onTogglePreview} />,
