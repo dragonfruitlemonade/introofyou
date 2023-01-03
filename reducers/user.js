@@ -14,7 +14,7 @@ export const initialState = {
   introWriteDone: false,
   introWriteError: null,
   me: null,
-  myIntroData: {},
+  myIntroData: [],
   signUpData: {},
   loginData: {},
 };
@@ -58,6 +58,7 @@ const reducer = (state = initialState, action) =>
       case INTRO_WRITE_SUCCESS:
         draft.introWriteLoading = false;
         draft.introWriteDone = true;
+        draft.myIntroData = action.data;
         break;
       case INTRO_WRITE_FAILURE:
         draft.introWriteLoading = false;
