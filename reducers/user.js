@@ -10,12 +10,9 @@ export const initialState = {
   signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
-  introWriteLoading: false, // 회원가입 시도중
+  introWriteLoading: false, // 자기소개서 작성 시도중
   introWriteDone: false,
   introWriteError: null,
-  loadPreviewLoading: false, // 회원가입 시도중
-  loadPreviewDone: false,
-  loadPreviewError: null,
   me: null,
   myIntroData: {},
   signUpData: {},
@@ -25,10 +22,6 @@ export const initialState = {
 export const INTRO_WRITE_REQUEST = "INTRO_WRITE_REQUEST";
 export const INTRO_WRITE_SUCCESS = "INTRO_WRITE_SUCCESS";
 export const INTRO_WRITE_FAILURE = "INTRO_WRITE_FAILURE";
-
-export const LOAD_PREVIEW_REQUEST = "LOAD_PREVIEW_REQUEST";
-export const LOAD_PREVIEW_SUCCESS = "LOAD_PREVIEW_SUCCESS";
-export const LOAD_PREVIEW_FAILURE = "LOAD_PREVIEW_FAILURE";
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
@@ -45,12 +38,6 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const ADD_POST_TO_ME = "ADD_POST_TO_ME";
 export const REMOVE_POST_OF_ME = "REMOVE_POST_OF_ME";
 
-const dummyUser = (data) => ({
-  ...data,
-  id: 1,
-  Posts: [{ id: 1 }],
-});
-
 export const loginRequestAction = (data) => ({
   type: LOG_IN_REQUEST,
   data,
@@ -63,19 +50,6 @@ export const logoutRequestAction = () => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case LOAD_PREVIEW_REQUEST:
-        draft.loadPreviewLoading = true;
-        draft.loadPreviewError = null;
-        draft.loadPreviewDone = false;
-        break;
-      case LOAD_PREVIEW_SUCCESS:
-        draft.loadPreviewLoading = false;
-        draft.loadPreviewDone = true;
-        break;
-      case LOAD_PREVIEW_FAILURE:
-        draft.loadPreviewLoading = false;
-        draft.loadPreviewError = action.error;
-        break;
       case INTRO_WRITE_REQUEST:
         draft.introWriteLoading = true;
         draft.introWriteError = null;
@@ -96,7 +70,7 @@ const reducer = (state = initialState, action) =>
         break;
       case LOG_IN_SUCCESS:
         draft.logInLoading = false;
-        draft.me = dummyUser(action.data);
+        draft.me = action.data;
         draft.logInDone = true;
         break;
       case LOG_IN_FAILURE:
