@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
+import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const Community = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,9 @@ const Community = () => {
   );
   
   useEffect(() => {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+    });
     dispatch({
       type: LOAD_POSTS_REQUEST,
     });
@@ -42,10 +46,8 @@ const Community = () => {
 
   return (
     <IndexLayout>
-      <PostForm />
-      {mainPosts.map((c) => (
-        <PostCard key={c.id} post={c} />
-      ))}
+      {me && <PostForm />}
+      {mainPosts.map((post) => (<PostCard key={post.id} post={post} />))}
     </IndexLayout>
   );
 };
