@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -29,7 +30,8 @@ const PostForm = () => {
     }
 
     if (!term) {
-      return alert("자기소개서를 첨부해주세요.");
+      alert("자기소개서를 첨부해주세요.");
+      return setTermError(true);
     }
 
     const formData = new FormData();
