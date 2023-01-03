@@ -6,6 +6,7 @@ import {
   put,
   takeLatest,
   throttle,
+  call,
 } from "redux-saga/effects";
 
 import {
