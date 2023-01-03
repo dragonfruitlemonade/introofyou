@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useCallback, useEffect } from "react";
-
 import { Form, Input, Button } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
@@ -11,39 +10,45 @@ import { SIGN_UP_REQUEST } from "../reducers/user";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { me, signUpLoading } = useSelector((state) => state.user);
+  const { me, signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (me && me.id) {
+      alert("잘못된 접근입니다.");
+      Router.replace("/");
+    }
+  }, [me && me.id]);
+
+  useEffect(() => {
+    if (signUpDone) {
+      Router.replace("/");
+    }
+  }, [signUpDone]);
+
+  useEffect(() => {
+    if (signUpError) {
+      alert(signUpError);
+    }
+  }, [signUpError]);
 
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordError, setPasswordError] = useState(false);
 
-  useEffect(() => {
-    if (me) {
-      alert('잘못된 접근입니다.');
-      Router.push('/');
-    }
-  }, [me && me.id]);
-
-  const onChangePasswordCheck = useCallback(
-    (e) => {
-      setPasswordError(e.target.value !== password);
+  const onChangePasswordCheck = useCallback((e) => {
       setPasswordCheck(e.target.value);
-    },
-    [password]
-  );
+      setPasswordError(e.target.value !== password);
+  }, [password]);
 
   const onSubmit = useCallback(() => {
     if (password !== passwordCheck) {
       return setPasswordError(true);
     }
-
+    console.log(email, password);
     return dispatch({
       type: SIGN_UP_REQUEST,
-      data: {
-        email,
-        password,
-      },
+      data: { email, password },
     });
   }, [email, password, passwordCheck]);
 
@@ -82,9 +87,7 @@ const Signup = () => {
             required
             onChange={onChangePasswordCheck}
           />
-          {passwordError && (
-            <div style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</div>
-          )}
+          {passwordError && (<div style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</div>)}
         </div>
         <div style={{ marginTop: 10 }}>
           <Button type="primary" htmlType="submit" loading={signUpLoading}>
