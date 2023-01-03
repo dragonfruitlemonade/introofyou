@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
+import { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,19 +9,18 @@ import {
   EllipsisOutlined,
   ArrowDownOutlined,
 } from "@ant-design/icons";
-import { Card, Popover, Button, Avatar, List, Comment } from "antd";
+import { Card, Popover, Button, Avatar, List } from "antd";
 
 import CommentForm from "./CommentForm";
 import IntroPreview from "./IntroPreview";
+import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST, REMOVE_POST_REQUEST } from "../reducers/post";
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const [previewOpened, setPreviewOpened] = useState(false);
   const { removePostLoading } = useSelector((state) => state.post);
-  const { me } = useSelector((state) => state.user);
-  const id = useSelector((state) => state.user.me && state.user.me.id);
+  const id = useSelector((state) => state.user.me?.id);
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -42,6 +42,10 @@ const PostCard = ({ post }) => {
     });
   }, [id]);
 
+  const onToggleComment = useCallback(() => {
+    setCommentFormOpened((prev) => !prev);
+  }, []);
+
   const onTogglePreview = useCallback(() => {
     setPreviewOpened((prev) => !prev);
   }, []);
@@ -51,8 +55,9 @@ const PostCard = ({ post }) => {
       type: REMOVE_POST_REQUEST,
       data: post.id,
     });
-  }, []);
+  }, [id]);
 
+  const liked = post.Likers.find((v) => v.id === id);
   return (
     <div style={{ marginBottom: 20 }} key={post.id}>
       <Card
@@ -94,8 +99,9 @@ const PostCard = ({ post }) => {
         ]}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-          title={post.User.nickname}
+          avatar={<Avatar>{post.User.id}</Avatar>}
+          title={post.User.id}
+          postData={post.content}
         />
       </Card>
       {commentFormOpened && (
@@ -108,8 +114,8 @@ const PostCard = ({ post }) => {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  author={item.User.id}
+                  avatar={<Avatar>{item.User.id[0]}</Avatar>}
                   content={item.content}
                 />
               </List.Item>
