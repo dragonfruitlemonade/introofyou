@@ -17,16 +17,15 @@ import {
 } from "../reducers/user";
 
 function introWriteAPI(data) {
-  return axios.post("/api/login", data);
+  return axios.post('/user', data); // INTRO /user/intro
 }
 
 function* introWrite(action) {
   try {
-    // const result = yield call(introWriteAPI);
-    yield delay(1000);
+    const result = yield call(introWriteAPI, action.data);
     yield put({
       type: INTRO_WRITE_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
   } catch (err) {
     console.error(err);
