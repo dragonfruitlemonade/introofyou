@@ -53,6 +53,9 @@ module.exports = (sequelize, DataTypes) => {
       collate: "utf8mb4_general_ci", // 한글 저장
     }
   );
-  Intro.associate = (db) => {};
+  Intro.associate = (db) => {
+    db.Intro.belongsTo(db.User);
+    db.Intro.hasMany(db.Post);
+  };
   return Intro;
 };
