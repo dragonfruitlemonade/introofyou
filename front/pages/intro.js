@@ -19,7 +19,7 @@ const Intro = () => {
   const [income, onChangeIncome] = useInput("");
   const [portfolio, onChangePortfolio] = useInput("");
   const [academic, onChangeAcademic] = useInput("");
-  const [sentence, onChangeSentence] = useInput("");
+  const [intro, onChangeintro] = useInput("");
   const [skill, onChangeSkill] = useInput("");
   const [reason, onChangeReason] = useInput("");
   const [other, onChangeOther] = useInput("");
@@ -39,7 +39,7 @@ const Intro = () => {
       income,
       portfolio,
       academic,
-      sentence,
+      intro,
       skill,
       reason,
       other
@@ -54,7 +54,7 @@ const Intro = () => {
         income,
         portfolio,
         academic,
-        sentence,
+        intro,
         skill,
         reason,
         other,
@@ -68,7 +68,7 @@ const Intro = () => {
     income,
     portfolio,
     academic,
-    sentence,
+    intro,
     skill,
     reason,
     other,
@@ -127,7 +127,7 @@ const Intro = () => {
             <br />
           </Col>
           <Col span={11}>
-            <label htmlFor="user-income">이메일</label>
+            <label htmlFor="user-income">희망연봉</label>
             <hr />
             <Input
               name="user-income"
@@ -165,12 +165,12 @@ const Intro = () => {
             <br />
           </Col>
           <Col span={24}>
-            <label htmlFor="user-sentence">한줄 자기소개</label>
+            <label htmlFor="user-intro">한줄 자기소개</label>
             <hr />
             <Input
-              name="user-sentence"
-              value={sentence}
-              onChange={onChangeSentence}
+              name="user-intro"
+              value={intro}
+              onChange={onChangeintro}
               required
             />
           </Col>
