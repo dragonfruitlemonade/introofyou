@@ -4,7 +4,11 @@ const { User } = require('../models');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/login', (req, res, next) => {
+
+});
+
+router.post('/', async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
