@@ -20,7 +20,7 @@ router.post('/login', (req, res, next) => { // req, res, next를 사용하기 �
         console.error(loginErr);
         return next(loginErr);
       }
-      return res.json(user);
+      return res.status(200).json(user);
     })
   })
 });
@@ -48,5 +48,11 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
+
+router.post('/user/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send('logoutOK');
+})
 
 module.exports = router
