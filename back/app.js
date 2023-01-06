@@ -1,7 +1,9 @@
 const express = require('express');
-const postRouter = require('./routes/post');
+const cors = require('cors');
+// const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const db = require('./models');
+const passportConfig = require('./passport');
 const app = express();
 
 db.sequelize
@@ -11,6 +13,12 @@ db.sequelize
   })
   .catch(console.error);
 
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 app.use(express.json()); // 아래 코드와 함께 routes에서 req.body를 사용하기 위한 코드, json형식을 req.body안에 넣어줌
 app.use(express.urlencoded({ extended: true })); // form submit을 했을때 데이터를 req.body안에 넣어줌.
 
@@ -22,7 +30,7 @@ app.get("/", (req, res) => {
   res.send("hello api");
 });
 
-app.use('/post', postRouter);
+// app.use('/post', postRouter);
 app.use('/user', userRouter);
 
 
