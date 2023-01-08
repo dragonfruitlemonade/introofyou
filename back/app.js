@@ -3,10 +3,10 @@ const cors = require('cors');
 // const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const db = require('./models');
-const passport = require('./passport');
-const passportConfig = require('./passport');
+const passport = require('passport');
 const dotenv = require('dotenv');
 
+const passportConfig = require("./passport");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
@@ -35,7 +35,7 @@ app.use(session({
   resave: false,
   secret: process.env.COOKIE_SECRET,
 }));
-app.use(passport.initialize());
+app.use(passport.initialize()); // passport 구동
 app.use(passport.session());
 
 app.get("/", (req, res) => {
