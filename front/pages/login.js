@@ -19,7 +19,7 @@ const FormWrapper = styled(Form)`
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { me, logInLoading } = useSelector((state) => state.user);
+  const { me, logInLoading, logInError } = useSelector((state) => state.user);
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
 
@@ -27,6 +27,12 @@ const Login = () => {
     console.log(email, password);
     dispatch(loginRequestAction({ email, password }));
   }, [email, password]);
+
+  useEffect(() => {
+    if (logInError) {
+      alert(logInError);
+    }
+  }, [logInError]);
 
   useEffect(() => {
     if (me) {
