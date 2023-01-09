@@ -38,6 +38,11 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const ADD_POST_TO_ME = "ADD_POST_TO_ME";
 export const REMOVE_POST_OF_ME = "REMOVE_POST_OF_ME";
 
+export const introRequestAction = (data) => ({
+  type: INTRO_WRITE_REQUEST,
+  data,
+});
+
 export const loginRequestAction = (data) => ({
   type: LOG_IN_REQUEST,
   data,
