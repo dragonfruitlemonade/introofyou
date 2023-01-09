@@ -10,8 +10,8 @@ import { INTRO_WRITE_REQUEST } from "../reducers/user";
 
 
 const Intro = () => {
-  const disptach = useDispatch();
-  const { me, introWriteLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { me, introWriteLoading, introWriteError } = useSelector((state) => state.user);
   const [field, onChangeField] = useInput("");
   const [major, onChangeMajor] = useInput("");
   const [job, onChangeJob] = useInput("");
@@ -26,9 +26,16 @@ const Intro = () => {
   
   useEffect(() => {
     if (!(me && me.id)) {
+      alert("잘못된 접근입니다.");
       Router.replace("/");
     }
   }, [me && me.id]);
+
+  useEffect(() => {
+    if (introWriteError) {
+      alert(introWriteError);
+    }
+  }, [introWriteError]);
 
   const onFinish = useCallback(() => {
     console.log(
@@ -42,12 +49,13 @@ const Intro = () => {
       intro,
       skill,
       reason,
-      other
+      other,
+      id
     );
-    disptach({
+    dispatch({
       type: INTRO_WRITE_REQUEST,
       data: {
-        field,
+        content: field,
         major,
         job,
         call,
@@ -58,6 +66,7 @@ const Intro = () => {
         skill,
         reason,
         other,
+        userId: id
       },
     });
   }, [
@@ -72,6 +81,7 @@ const Intro = () => {
     skill,
     reason,
     other,
+    id,
   ]);
 
   return (
