@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 const { User, Post, Intro } = require('../models');
-const db = require('../models');
 
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
-router.post('/login', (req, res, next) => { // req, res, next를 사용하기 위해 미들웨어 확장.
+router.post('/login', isNotLoggedIn, (req, res, next) => { // req, res, next를 사용하기 위해 미들웨어 확장.
   passport.authenticate('local', (err, user, info) => { // local에서 done으로 넘어온 정보.
     if (err) {
       console.error(err);
@@ -61,10 +61,12 @@ router.post('/', async (req, res, next) => { // 회원가입라우터
   }
 });
 
-router.post('/logout', (req, res) => {
-  req.logout();
+router.post('/logout', isLoggedIn, (req, res) => {
+  req.logout(() => {
+    res.redirect('/');
+  });
   req.session.destroy();
   res.send('logoutOK');
-})
+});
 
 module.exports = router
