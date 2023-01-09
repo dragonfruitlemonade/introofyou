@@ -34,12 +34,7 @@ const PostForm = () => {
       return setTermError(true);
     }
 
-    const formData = new FormData();
-    formData.append("content", text);
-    return dispatch({
-      type: ADD_POST_REQUEST,
-      data: formData,
-    });
+    dispatch(addPost(text));
   }, [text, term]);
 
   return (
