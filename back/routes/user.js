@@ -2,7 +2,8 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-const { User } = require('../models');
+const { User, Post, Intro } = require('../models');
+const db = require('../models');
 
 const router = express.Router();
 
@@ -20,12 +21,23 @@ router.post('/login', (req, res, next) => { // req, res, next를 사용하기 �
         console.error(loginErr);
         return next(loginErr);
       }
-      return res.status(200).json(user);
-    })
-  })
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          exclude: ['password']
+        },
+        include: [{
+          model: Post,
+        }, {
+          model: Intro,
+        }]
+      })
+      return res.status(200).json(fullUserWithoutPassword);
+    });
+  })(req, res, next);
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => { // 회원가입라우터
   try {
     const exUser = await User.findOne({
       where: {
@@ -37,19 +49,19 @@ router.post('/', async (req, res, next) => {
       return res.status(403).send('이미 사용 중인 아이디입니다.');
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10); // 비밀번호 해쉬화
+    const hashedPassword = await bcrypt.hash(req.body.password, 12); // 비밀번호 해쉬화
     await User.create({
       email: req.body.email,
       password: hashedPassword,
     });
-    res.status(200).send("ok");
+    res.status(201).send("ok");
   } catch(error) {
     console.error(error);
     next(error);
   }
 });
 
-router.post('/user/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   req.logout();
   req.session.destroy();
   res.send('logoutOK');

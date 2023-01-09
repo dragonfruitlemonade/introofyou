@@ -29,7 +29,7 @@ app.use(
 );
 app.use(express.json()); // 아래 코드와 함께 routes에서 req.body를 사용하기 위한 코드, json형식을 req.body안에 넣어줌
 app.use(express.urlencoded({ extended: true })); // form submit을 했을때 데이터를 req.body안에 넣어줌.
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
   saveUninitialized: false,
   resave: false,
