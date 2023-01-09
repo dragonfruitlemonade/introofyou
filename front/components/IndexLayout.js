@@ -1,21 +1,26 @@
 import React from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import propTypes from 'prop-types';
 import Link from 'next/link';
 import { Col, Row, Menu, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { LOG_OUT_REQUEST } from '../reducers/user';
+import { logoutRequestAction } from '../reducers/user';
 
 const IndexLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const { me, logOutLoading } = useSelector((state) => state.user);
+  const { me, logOutLoading, logOutError } = useSelector((state) => state.user);
 
   const onLogout = useCallback(() => {
-    dispatch({
-      type: LOG_OUT_REQUEST,
-    });
+    dispatch(logoutRequestAction());
   }, []);
+
+  useEffect(() => {
+    if (logOutError) {
+      alert(logOutError);
+    }
+  }, [logOutError]);
+
 
   return (
     <Row>
