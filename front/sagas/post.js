@@ -93,13 +93,12 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post("/post", data);
+  return axios.post("/post", { content: data });
 }
 
 function* addPost(action) {
   try {
     const result = yield call(addPostAPI, action.data);
-    const id = shortId.generate();
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
