@@ -37,7 +37,7 @@ const Intro = () => {
     }
   }, [introWriteError]);
 
-  const onFinish = useCallback(() => {
+  const onSubmit = useCallback(() => {
     console.log(
       field,
       major,
@@ -49,12 +49,12 @@ const Intro = () => {
       intro,
       skill,
       reason,
-      other,
+      other
     );
-    dispatch({
+    return dispatch({
       type: INTRO_WRITE_REQUEST,
       data: {
-        content: field,
+        field,
         major,
         job,
         call,
@@ -83,7 +83,7 @@ const Intro = () => {
 
   return (
     <IndexLayout>
-      <Form style={{ padding: 10 }} onFinish={onFinish}>
+      <Form style={{ padding: 10 }} onFinish={onSubmit}>
         <Row>
           <Col span={11}>
             <label htmlFor="user-field">지원분야</label>
