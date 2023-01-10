@@ -50,7 +50,6 @@ const Intro = () => {
       skill,
       reason,
       other,
-      id
     );
     dispatch({
       type: INTRO_WRITE_REQUEST,
@@ -66,7 +65,6 @@ const Intro = () => {
         skill,
         reason,
         other,
-        userId: id
       },
     });
   }, [
@@ -81,7 +79,6 @@ const Intro = () => {
     skill,
     reason,
     other,
-    id,
   ]);
 
   return (
