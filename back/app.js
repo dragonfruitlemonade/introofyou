@@ -24,7 +24,7 @@ passportConfig();
 app.use(
   cors({
     origin: 'http://localhost:3000',
-    credentials: true,
+    credentials: true, // 프론트 백 쿠키 공유
   })
 );
 app.use(express.json()); // 아래 코드와 함께 routes에서 req.body를 사용하기 위한 코드, json형식을 req.body안에 넣어줌
