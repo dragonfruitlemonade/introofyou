@@ -142,6 +142,7 @@ function* removePost(action) {
 
 function addCommentAPI(data) {
   return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
+  
 }
 
 function* addComment(action) {

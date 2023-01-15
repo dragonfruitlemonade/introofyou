@@ -16,9 +16,9 @@ const Community = () => {
   );
   
   useEffect(() => {
-    dispatch({
-      type: LOAD_USER_REQUEST,
-    });
+    // dispatch({
+    //   type: LOAD_USER_REQUEST,
+    // });
     dispatch({
       type: LOAD_POSTS_REQUEST,
     });

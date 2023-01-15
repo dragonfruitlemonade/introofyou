@@ -23,7 +23,7 @@ const IndexLayout = ({ children }) => {
 
 
   return (
-    <Row style={{ width: "1000px", margin: "0 auto" }}>
+    <Row style={{ width: "1100px", margin: "0 auto" }}>
       <Col span={4}></Col>
       <Col span={12} defaultChecked>
         <Menu mode="horizontal" style={{ alignItems: "center" }}>
