@@ -1,6 +1,9 @@
 import produce from "immer";
 
 export const initialState = {
+  loadUserLoading: false, // 로그인상태 유지, 사용자 정보 불러오기
+  loadUserDone: false,
+  loadUserError: null,
   logInLoading: false, // 로그인 시도중
   logInDone: false,
   logInError: null,
@@ -22,6 +25,10 @@ export const initialState = {
 export const INTRO_WRITE_REQUEST = "INTRO_WRITE_REQUEST";
 export const INTRO_WRITE_SUCCESS = "INTRO_WRITE_SUCCESS";
 export const INTRO_WRITE_FAILURE = "INTRO_WRITE_FAILURE";
+
+export const LOAD_USER_REQUEST =  "LOAD_USER_REQUEST";
+export const LOAD_USER_SUCCESS =  "LOAD_USER_SUCCESS";
+export const LOAD_USER_FAILURE =  "LOAD_USER_FAILURE";
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
@@ -55,6 +62,20 @@ export const logoutRequestAction = () => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_USER_REQUEST:
+        draft.loadUserLoading = true;
+        draft.loadUserError = null;
+        draft.loadUserDone = false;
+        break;
+      case LOAD_USER_SUCCESS:
+        draft.loadUserLoading = false;
+        draft.me = action.data;
+        draft.loadUserDone = true;
+        break;
+      case LOAD_USER_FAILURE:
+        draft.loadUserLoading = false;
+        draft.loadUserError = action.error;
+        break;
       case INTRO_WRITE_REQUEST:
         draft.introWriteLoading = true;
         draft.introWriteError = null;

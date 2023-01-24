@@ -5,6 +5,9 @@ import {
   LOG_IN_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
   LOG_OUT_FAILURE,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
@@ -31,6 +34,26 @@ function* introWrite(action) {
     console.error(err);
     yield put({
       type: INTRO_WRITE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function loadUserAPI() {
+  return axios.get("/user");
+}
+
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_USER_FAILURE,
       error: err.response.data,
     });
   }
@@ -95,6 +118,10 @@ function* signUp(action) {
   }
 }
 
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
+
 function* watchIntroWrite() {
   yield takeLatest(INTRO_WRITE_REQUEST, introWrite);
 }
@@ -114,6 +141,7 @@ function* watchSignUp() {
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
+    fork(watchLoadUser),
     fork(watchLogOut),
     fork(watchSignUp),
     fork(watchIntroWrite),
