@@ -101,7 +101,7 @@ const PostCard = ({ post }) => {
         <Card.Meta
           avatar={<Avatar>{post.User.id}</Avatar>}
           title={post.User.id}
-          postData={post.content}
+          description={post.content}
         />
       </Card>
       {commentFormOpened && (

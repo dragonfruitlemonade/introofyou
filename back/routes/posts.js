@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => { // GET /posts
         }]
       }, {
         model: User,
-        as: 'Liker',
+        as: 'Likers',
         attributes: ['id'],
       }],
     });

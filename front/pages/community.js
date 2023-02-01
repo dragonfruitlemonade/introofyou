@@ -47,7 +47,7 @@ const Community = () => {
   return (
     <IndexLayout>
       {me && <PostForm />}
-      {mainPosts.map((post) => (<PostCard key={post.id} post={post} />))}
+      {mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
     </IndexLayout>
   );
 };
