@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/', async (req, res, next) => { // GET /posts
   try {
     const posts = await Post.findAll({
-      where: { id: lastId },
       limit: 10,
       order: [
         ['createdAt', 'DESC'],
