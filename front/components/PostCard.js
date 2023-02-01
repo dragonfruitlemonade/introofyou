@@ -114,9 +114,9 @@ const PostCard = ({ post }) => {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  author={item.User.id}
-                  avatar={<Avatar>{item.User.id[0]}</Avatar>}
-                  content={item.content}
+                  author={<div>{item.User.id}</div>}
+                  avatar={<Avatar>{item.User.id}</Avatar>}
+                  description={item.content}
                 />
               </List.Item>
             )}

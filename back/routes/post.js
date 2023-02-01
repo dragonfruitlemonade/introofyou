@@ -62,10 +62,7 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => { // POST 
           model: User,
           attributes: ['id']
         }]
-      }, {
-        model: User,
-        attributes: ['id'],
-      }]
+      }],
     })
     res.status(201).json(fullComment);
   } catch (error) {
