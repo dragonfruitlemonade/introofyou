@@ -142,3 +142,9 @@ const reducer = (state = initialState, action) =>
   });
 
 export default reducer;
+
+// case CHANGE_NICKNAME_SUCCESS:
+//   draft.me.nickname = action.data.nickname;
+//   draft.changeNicknameLoading = false;
+//   draft.changeNicknameError = true;
+//   break;

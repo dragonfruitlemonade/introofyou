@@ -117,7 +117,7 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete(`/post/${data}`);
+  return axios.delete(`/post/${data}`); // delete는 데이터 넣을 수 없음.
 }
 
 function* removePost(action) {
