@@ -68,7 +68,7 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => { // POST 
   }
 });
 
-router.patch('/:postId/like', async (req, res, next) => {
+router.patch('/:postId/like', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({ where: { id: req.params.postId }});
     if (!post) {
@@ -82,7 +82,7 @@ router.patch('/:postId/like', async (req, res, next) => {
   }
 });
 
-router.delete("/:postId/like", async (req, res, next) => {
+router.delete("/:postId/like", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({ where: { id: req.params.postId }});
     if (!post) {
@@ -95,5 +95,19 @@ router.delete("/:postId/like", async (req, res, next) => {
     next(error);
   }
 });
+
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
+  try {
+    await Post.destroy({
+      where: { 
+        id: req.params.postId, // 게시글의 아이디
+        UserId: req.user.id, // 게시글의 작성자 아이디, 본인이 쓴 글만 삭제할 수 있도록
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+})
 
 module.exports = router;
