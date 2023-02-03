@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useInput from "../hooks/useInput";
 import IndexLayout from "../components/IndexLayout";
 import { loginRequestAction } from "../reducers/user";
+import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import { END } from "redux-saga";
 import axios from "axios";
 import wrapper from "../store/configureStore";
