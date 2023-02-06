@@ -4,6 +4,9 @@ export const initialState = {
   loadMyInfoLoading: false, // 로그인상태 유지, 내 정보 불러오기
   loadMyInfoDone: false,
   loadMyInfoError: null,
+  loadMyIntroLoading: false, // 내 자기소개서 불러오기
+  loadMyIntroDone: false,
+  loadMyIntroError: null,
   loadUserLoading: false, // 로그인상태 유지, 사용자 정보 불러오기
   loadUserDone: false,
   loadUserError: null,
@@ -20,12 +23,17 @@ export const initialState = {
   introWriteDone: false,
   introWriteError: null,
   me: null,
+  myIntro: null,
   userInfo: null,
 };
 
 export const INTRO_WRITE_REQUEST = "INTRO_WRITE_REQUEST";
 export const INTRO_WRITE_SUCCESS = "INTRO_WRITE_SUCCESS";
 export const INTRO_WRITE_FAILURE = "INTRO_WRITE_FAILURE";
+
+export const LOAD_MY_INTRO_REQUEST = "LOAD_MY_INTRO_REQUEST";
+export const LOAD_MY_INTRO_SUCCESS = "LOAD_MY_INTRO_SUCCESS";
+export const LOAD_MY_INTRO_FAILURE = "LOAD_MY_INTRO_FAILURE";
 
 export const LOAD_MY_INFO_REQUEST = "LOAD_MY_INFO_REQUEST";
 export const LOAD_MY_INFO_SUCCESS = "LOAD_MY_INFO_SUCCESS";
@@ -80,6 +88,20 @@ const reducer = (state = initialState, action) =>
       case LOAD_MY_INFO_FAILURE:
         draft.loadMyInfoLoading = false;
         draft.loadMyInfoError = action.error;
+        break;
+      case LOAD_MY_INTRO_REQUEST:
+        draft.loadMyIntroLoading = true;
+        draft.loadMyIntroError = null;
+        draft.loadMyIntroDone = false;
+        break;
+      case LOAD_MY_INTRO_SUCCESS:
+        draft.loadMyIntroLoading = false;
+        draft.myIntro = action.data;
+        draft.loadMyIntroDone = true;
+        break;
+      case LOAD_MY_INTRO_FAILURE:
+        draft.loadMyIntroLoading = false;
+        draft.loadMyIntroError = action.error;
         break;
       case LOAD_USER_REQUEST:
         draft.loadUserLoading = true;
