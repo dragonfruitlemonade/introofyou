@@ -19,11 +19,23 @@ router.get('/', async (req, res, next) => {
         include: [
           {
             model: Post,
-            attributes: ['id'],
+            attributes: ["id"],
           },
           {
             model: Intro,
-            attributes: ['id'],
+            attributes: [
+              "field",
+              "major",
+              "job",
+              "call",
+              "income",
+              "portfolio",
+              "academic",
+              "intro",
+              "skill",
+              "reason",
+              "other",
+            ],
           },
         ],
       });
@@ -32,6 +44,40 @@ router.get('/', async (req, res, next) => {
       res.status(200).json(null);
     }
   } catch(error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get("/intro", isLoggedIn, async (req, res, next) => {
+  try {
+    if (req.user) {
+      const intros = await User.findOne({
+        where: { id: req.user.id },
+        include: [
+          {
+            model: Intro,
+            attributes: [
+              "field",
+              "major",
+              "job",
+              "call",
+              "income",
+              "portfolio",
+              "academic",
+              "intro",
+              "skill",
+              "reason",
+              "other",
+            ],
+          },
+        ],
+      });
+      res.status(200).json(intros);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
     console.error(error);
     next(error);
   }
@@ -133,9 +179,9 @@ router.post('/logout', isLoggedIn, (req, res) => {
   res.send('logoutOK');
 });
 
-router.post("/intro", async (req, res, next) => {
+router.patch("/intro", async (req, res, next) => {
   try {
-    await Intro.create({
+    await Intro.update({
       field: req.body.field,
       major: req.body.major,
       job: req.body.job,
@@ -148,6 +194,8 @@ router.post("/intro", async (req, res, next) => {
       reason: req.body.reason,
       other: req.body.other,
       UserId: req.user.id,
+    }, {
+      where: { id: req.user.id },
     });
     res.status(201).send("ok");
   } catch (error) {
