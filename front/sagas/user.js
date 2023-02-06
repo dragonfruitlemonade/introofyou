@@ -20,10 +20,13 @@ import {
   INTRO_WRITE_REQUEST,
   INTRO_WRITE_SUCCESS,
   INTRO_WRITE_FAILURE,
+  LOAD_MY_INTRO_REQUEST,
+  LOAD_MY_INTRO_SUCCESS,
+  LOAD_MY_INTRO_FAILURE,
 } from "../reducers/user";
 
 function introWriteAPI(data) {
-  return axios.post('/user/intro', data); // INTRO /user/intro
+  return axios.patch('/user/intro', data); // INTRO /user/intro
 }
 
 function* introWrite(action) {
@@ -37,6 +40,26 @@ function* introWrite(action) {
     console.error(err);
     yield put({
       type: INTRO_WRITE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function loadMyIntroAPI() {
+  return axios.get("/user/intro");
+}
+
+function* loadMyIntro() {
+  try {
+    const result = yield call(loadMyIntroAPI);
+    yield put({
+      type: LOAD_MY_INTRO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_MY_INTRO_FAILURE,
       error: err.response.data,
     });
   }
@@ -145,6 +168,10 @@ function* watchLoadMyInfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
 }
 
+function* watchLoadMyIntro() {
+  yield takeLatest(LOAD_MY_INTRO_REQUEST, loadMyIntro);
+}
+
 function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
@@ -170,6 +197,7 @@ export default function* userSaga() {
     fork(watchLogIn),
     fork(watchLoadUser),
     fork(watchLoadMyInfo),
+    fork(watchLoadMyIntro),
     fork(watchLogOut),
     fork(watchSignUp),
     fork(watchIntroWrite),
