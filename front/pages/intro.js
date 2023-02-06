@@ -3,16 +3,20 @@ import { useCallback, useEffect } from "react";
 import Router from "next/router"
 import { Form, Input, Button, Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
+import { END } from "redux-saga";
+import axios from "axios";
+import wrapper from "../store/configureStore";
 
 import IndexLayout from "../components/IndexLayout";
 import useInput from "../hooks/useInput";
-import { INTRO_WRITE_REQUEST } from "../reducers/user";
+import { INTRO_WRITE_REQUEST, LOAD_MY_INTRO_REQUEST } from "../reducers/user";
 
 
 const Intro = () => {
   const dispatch = useDispatch();
-  const { me, introWriteLoading, introWriteError } = useSelector((state) => state.user);
-  const [field, onChangeField] = useInput("");
+  const { me, myIntro, introWriteLoading, introWriteError } = useSelector((state) => state.user);
+  const [field, onChangeField] = useInput(me?.field || "");
   const [major, onChangeMajor] = useInput("");
   const [job, onChangeJob] = useInput("");
   const [call, onChangeCall] = useInput("");
@@ -94,6 +98,7 @@ const Intro = () => {
               onChange={onChangeField}
               required
             />
+            <div></div>
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
@@ -121,7 +126,7 @@ const Intro = () => {
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
-            <label htmlFor="user-call">이메일</label>
+            <label htmlFor="user-call">전화번호</label>
             <hr />
             <Input
               name="user-call"
@@ -231,5 +236,24 @@ const Intro = () => {
     </IndexLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
+    axios.defaults.headers.Cookie = cookie;
+    context.store.dispatch({
+      type: LOAD_MY_INFO_REQUEST,
+    });
+    context.store.dispatch({
+      type: LOAD_MY_INTRO_REQUEST,
+    });
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Intro;
