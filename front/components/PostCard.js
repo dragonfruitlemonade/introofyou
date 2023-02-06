@@ -14,6 +14,9 @@ import { Card, Popover, Button, Avatar, List } from "antd";
 import CommentForm from "./CommentForm";
 import IntroPreview from "./IntroPreview";
 import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST, REMOVE_POST_REQUEST } from "../reducers/post";
+import moment from 'moment';
+
+moment.locale('ko');
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -98,6 +101,7 @@ const PostCard = ({ post }) => {
           </Popover>,
         ]}
       >
+        <div style={{ float: 'right' }}>{moment(post.createdAt).fromNow()}</div>
         <Card.Meta
           avatar={<Avatar>{post.User.id}</Avatar>}
           title={post.User.id}
