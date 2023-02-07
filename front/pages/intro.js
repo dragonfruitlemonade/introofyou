@@ -97,7 +97,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-field"
-              value={myIntro.field}
+              value={field}
               onChange={onChangeField}
             />
           </Col>
@@ -106,7 +106,7 @@ const Intro = () => {
             <label htmlFor="user-major">세부전공</label>
             <hr />
             <Input
-              value={myIntro.major}
+              value={major}
               name="user-major"
               onChange={onChangeMajor}
             />
@@ -117,7 +117,7 @@ const Intro = () => {
           <Col span={11}>
             <label htmlFor="user-job">직업</label>
             <hr />
-            <Input name="user-job" value={myIntro.job} onChange={onChangeJob} />
+            <Input name="user-job" value={job} onChange={onChangeJob} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
@@ -125,7 +125,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-call"
-              value={myIntro.call}
+              value={call}
               onChange={onChangeCall}
             />
           </Col>
@@ -137,7 +137,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-income"
-              value={myIntro.income}
+              value={income}
               onChange={onChangeIncome}
             />
           </Col>
@@ -147,7 +147,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-portfolio"
-              value={myIntro.portfolio}
+              value={portfolio}
               onChange={onChangePortfolio}
             />
           </Col>
@@ -159,7 +159,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-academic"
-              value={myIntro.academic}
+              value={academic}
               onChange={onChangeAcademic}
             />
           </Col>
@@ -172,7 +172,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-intro"
-              value={myIntro.intro}
+              value={intro}
               onChange={onChangeintro}
             />
           </Col>
@@ -184,7 +184,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-skill"
-              value={myIntro.skill}
+              value={skill}
               onChange={onChangeSkill}
             />
           </Col>
@@ -196,7 +196,7 @@ const Intro = () => {
             <hr />
             <Input.TextArea
               name="user-reason"
-              value={myIntro.reason}
+              value={reason}
               onChange={onChangeReason}
             />
           </Col>
@@ -208,7 +208,7 @@ const Intro = () => {
             <hr />
             <Input.TextArea
               name="user-other"
-              value={myIntro.other}
+              value={other}
               onChange={onChangeOther}
             />
           </Col>
