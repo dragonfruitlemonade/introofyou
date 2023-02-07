@@ -46,7 +46,7 @@ function* introWrite(action) {
 }
 
 function loadMyIntroAPI() {
-  return axios.get("/user/intro");
+  return axios.get("/user/intros");
 }
 
 function* loadMyIntro() {

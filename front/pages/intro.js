@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Router from "next/router"
 import { Form, Input, Button, Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,21 +12,22 @@ import IndexLayout from "../components/IndexLayout";
 import useInput from "../hooks/useInput";
 import { INTRO_WRITE_REQUEST, LOAD_MY_INTRO_REQUEST } from "../reducers/user";
 
-
 const Intro = () => {
   const dispatch = useDispatch();
   const { me, myIntro, introWriteLoading, introWriteError } = useSelector((state) => state.user);
-  const [field, onChangeField] = useInput(me?.field || "");
-  const [major, onChangeMajor] = useInput("");
-  const [job, onChangeJob] = useInput("");
-  const [call, onChangeCall] = useInput("");
-  const [income, onChangeIncome] = useInput("");
-  const [portfolio, onChangePortfolio] = useInput("");
-  const [academic, onChangeAcademic] = useInput("");
-  const [intro, onChangeintro] = useInput("");
-  const [skill, onChangeSkill] = useInput("");
-  const [reason, onChangeReason] = useInput("");
-  const [other, onChangeOther] = useInput("");
+  const [field, onChangeField] = useInput(myIntro?.field || "");
+  const [major, onChangeMajor] = useInput(myIntro?.major || "");
+  const [job, onChangeJob] = useInput(myIntro?.job || "");
+  const [call, onChangeCall] = useInput(myIntro?.call || "");
+  const [income, onChangeIncome] = useInput(myIntro?.income || "");
+  const [portfolio, onChangePortfolio] = useInput(myIntro?.portfolio || "");
+  const [academic, onChangeAcademic] = useInput(myIntro?.academic || "");
+  const [intro, onChangeintro] = useInput(myIntro?.intro || "");
+  const [skill, onChangeSkill] = useInput(myIntro?.skill || "");
+  const [reason, onChangeReason] = useInput(myIntro?.reason || "");
+  const [other, onChangeOther] = useInput(myIntro?.other || "");
+  const [buttonCheck, setbuttonCheck] = useState(false);
+
   
   useEffect(() => {
     if (!(me && me.id)) {
@@ -55,8 +56,8 @@ const Intro = () => {
       reason,
       other
     );
-    alert("저장되었습니다.");
     Router.replace("/intro");
+    setbuttonCheck(true);
     return dispatch({
       type: INTRO_WRITE_REQUEST,
       data: {
@@ -96,7 +97,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-field"
-              defaultValue={me.Intro.field}
+              value={myIntro.field}
               onChange={onChangeField}
             />
           </Col>
@@ -105,7 +106,7 @@ const Intro = () => {
             <label htmlFor="user-major">세부전공</label>
             <hr />
             <Input
-              defaultValue={me.Intro.major}
+              value={myIntro.major}
               name="user-major"
               onChange={onChangeMajor}
             />
@@ -116,11 +117,7 @@ const Intro = () => {
           <Col span={11}>
             <label htmlFor="user-job">직업</label>
             <hr />
-            <Input
-              name="user-job"
-              defaultValue={me.Intro.job}
-              onChange={onChangeJob}
-            />
+            <Input name="user-job" value={myIntro.job} onChange={onChangeJob} />
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
@@ -128,7 +125,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-call"
-              defaultValue={me.Intro.call}
+              value={myIntro.call}
               onChange={onChangeCall}
             />
           </Col>
@@ -140,7 +137,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-income"
-              defaultValue={me.Intro.income}
+              value={myIntro.income}
               onChange={onChangeIncome}
             />
           </Col>
@@ -150,7 +147,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-portfolio"
-              defaultValue={me.Intro.portfolio}
+              value={myIntro.portfolio}
               onChange={onChangePortfolio}
             />
           </Col>
@@ -162,7 +159,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-academic"
-              defaultValue={me.Intro.academic}
+              value={myIntro.academic}
               onChange={onChangeAcademic}
             />
           </Col>
@@ -175,7 +172,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-intro"
-              defaultValue={me.Intro.intro}
+              value={myIntro.intro}
               onChange={onChangeintro}
             />
           </Col>
@@ -187,7 +184,7 @@ const Intro = () => {
             <hr />
             <Input
               name="user-skill"
-              defaultValue={me.Intro.skill}
+              value={myIntro.skill}
               onChange={onChangeSkill}
             />
           </Col>
@@ -199,7 +196,7 @@ const Intro = () => {
             <hr />
             <Input.TextArea
               name="user-reason"
-              defaultValue={me.Intro.reason}
+              value={myIntro.reason}
               onChange={onChangeReason}
             />
           </Col>
@@ -211,7 +208,7 @@ const Intro = () => {
             <hr />
             <Input.TextArea
               name="user-other"
-              defaultValue={me.Intro.other}
+              value={myIntro.other}
               onChange={onChangeOther}
             />
           </Col>
@@ -221,8 +218,16 @@ const Intro = () => {
           <Button type="primary" htmlType="submit" loading={introWriteLoading}>
             저장하기
           </Button>
+          <div>
+            {buttonCheck && (
+              <div style={{ color: "green" }}>저장 되었습니다.</div>
+            )}
+          </div>
         </Row>
       </Form>
+      {/* {myIntro.map((element) => (
+        <div>{element}</div>
+      ))} */}
     </IndexLayout>
   );
 };
@@ -237,6 +242,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     axios.defaults.headers.Cookie = cookie;
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
+    });
+    context.store.dispatch({
+      type: LOAD_MY_INTRO_REQUEST,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
