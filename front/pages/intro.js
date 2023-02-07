@@ -55,6 +55,8 @@ const Intro = () => {
       reason,
       other
     );
+    alert("저장되었습니다.");
+    Router.replace("/intro");
     return dispatch({
       type: INTRO_WRITE_REQUEST,
       data: {
@@ -94,21 +96,18 @@ const Intro = () => {
             <hr />
             <Input
               name="user-field"
-              value={field}
+              defaultValue={me.Intro.field}
               onChange={onChangeField}
-              required
             />
-            <div></div>
           </Col>
           <Col span={2}></Col>
           <Col span={11}>
             <label htmlFor="user-major">세부전공</label>
             <hr />
             <Input
+              defaultValue={me.Intro.major}
               name="user-major"
-              value={major}
               onChange={onChangeMajor}
-              required
             />
           </Col>
           <Col span={24}>
@@ -119,9 +118,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-job"
-              value={job}
+              defaultValue={me.Intro.job}
               onChange={onChangeJob}
-              required
             />
           </Col>
           <Col span={2}></Col>
@@ -130,9 +128,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-call"
-              value={call}
+              defaultValue={me.Intro.call}
               onChange={onChangeCall}
-              required
             />
           </Col>
           <Col span={24}>
@@ -143,9 +140,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-income"
-              value={income}
+              defaultValue={me.Intro.income}
               onChange={onChangeIncome}
-              required
             />
           </Col>
           <Col span={2}></Col>
@@ -154,9 +150,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-portfolio"
-              value={portfolio}
+              defaultValue={me.Intro.portfolio}
               onChange={onChangePortfolio}
-              required
             />
           </Col>
           <Col span={24}>
@@ -167,9 +162,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-academic"
-              value={academic}
+              defaultValue={me.Intro.academic}
               onChange={onChangeAcademic}
-              required
             />
           </Col>
           <Col span={13}></Col>
@@ -181,9 +175,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-intro"
-              value={intro}
+              defaultValue={me.Intro.intro}
               onChange={onChangeintro}
-              required
             />
           </Col>
           <Col span={24}>
@@ -194,9 +187,8 @@ const Intro = () => {
             <hr />
             <Input
               name="user-skill"
-              value={skill}
+              defaultValue={me.Intro.skill}
               onChange={onChangeSkill}
-              required
             />
           </Col>
           <Col span={24}>
@@ -207,9 +199,8 @@ const Intro = () => {
             <hr />
             <Input.TextArea
               name="user-reason"
-              value={reason}
+              defaultValue={me.Intro.reason}
               onChange={onChangeReason}
-              required
             />
           </Col>
           <Col span={24}>
@@ -220,9 +211,8 @@ const Intro = () => {
             <hr />
             <Input.TextArea
               name="user-other"
-              value={other}
+              defaultValue={me.Intro.other}
               onChange={onChangeOther}
-              required
             />
           </Col>
           <Col span={24}>
@@ -247,9 +237,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     axios.defaults.headers.Cookie = cookie;
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
-    });
-    context.store.dispatch({
-      type: LOAD_MY_INTRO_REQUEST,
     });
     context.store.dispatch(END);
     await context.store.sagaTask.toPromise();
