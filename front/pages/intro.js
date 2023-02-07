@@ -225,9 +225,6 @@ const Intro = () => {
           </div>
         </Row>
       </Form>
-      {/* {myIntro.map((element) => (
-        <div>{element}</div>
-      ))} */}
     </IndexLayout>
   );
 };
