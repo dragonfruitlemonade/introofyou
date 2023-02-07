@@ -21,22 +21,22 @@ router.get('/', async (req, res, next) => {
             model: Post,
             attributes: ["id"],
           },
-          {
-            model: Intro,
-            attributes: [
-              "field",
-              "major",
-              "job",
-              "call",
-              "income",
-              "portfolio",
-              "academic",
-              "intro",
-              "skill",
-              "reason",
-              "other",
-            ],
-          },
+          // {
+          //   model: Intro,
+          //   attributes: [
+          //     "field",
+          //     "major",
+          //     "job",
+          //     "call",
+          //     "income",
+          //     "portfolio",
+          //     "academic",
+          //     "intro",
+          //     "skill",
+          //     "reason",
+          //     "other",
+          //   ],
+          // },
         ],
       });
       res.status(200).json(fullUserWithoutPassword);
@@ -49,29 +49,24 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get("/intro", isLoggedIn, async (req, res, next) => {
+router.get("/intros", isLoggedIn, async (req, res, next) => {
   try {
     if (req.user) {
-      const intros = await User.findOne({
+      const intros = await Intro.findOne({
         where: { id: req.user.id },
-        include: [
-          {
-            model: Intro,
-            attributes: [
-              "field",
-              "major",
-              "job",
-              "call",
-              "income",
-              "portfolio",
-              "academic",
-              "intro",
-              "skill",
-              "reason",
-              "other",
-            ],
-          },
-        ],
+          attributes: [
+            "field",
+            "major",
+            "job",
+            "call",
+            "income",
+            "portfolio",
+            "academic",
+            "intro",
+            "skill",
+            "reason",
+            "other",
+          ],
       });
       res.status(200).json(intros);
     } else {
