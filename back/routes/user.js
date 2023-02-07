@@ -176,7 +176,7 @@ router.post('/logout', isLoggedIn, (req, res) => {
 
 router.patch("/intro", async (req, res, next) => {
   try {
-    await Intro.update({
+    await Intro.create({
       field: req.body.field,
       major: req.body.major,
       job: req.body.job,

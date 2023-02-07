@@ -10,6 +10,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
+      IntroId: req.user.id, //
     });
     const fullPost = await Post.findOne({
       where: { id: post.id },
@@ -19,18 +20,22 @@ router.post('/', isLoggedIn, async (req, res, next) => {
           include: [
             {
               model: User, // 댓글 작성자
-              attributes: ['id'],
+              attributes: ["id"],
             },
           ],
         },
         {
           model: User, // 게시글 작성자
-          attributes: ['id'],
+          attributes: ["id"],
         },
         {
           model: User, // 좋아요 누른 사람
-          as: 'Likers',
-          attributes: ['id'],
+          as: "Likers",
+          attributes: ["id"],
+        },
+        {
+          model: Intro,
+          attributes: ["id"],
         },
       ],
     });

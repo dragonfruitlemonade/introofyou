@@ -15,23 +15,33 @@ router.get('/', async (req, res, next) => { // GET /posts
       where,
       limit: 10,
       order: [
-        ['createdAt', 'DESC'],
-        [Comment, 'createdAt', 'DESC']
+        ["createdAt", "DESC"],
+        [Comment, "createdAt", "DESC"],
       ],
-      include: [{
-        model: User,
-        attributes: ['id'],
-      }, {
-        model: Comment,
-        include: [{
+      include: [
+        {
           model: User,
-          attributes: ['id'],
-        }]
-      }, {
-        model: User,
-        as: 'Likers',
-        attributes: ['id'],
-      }],
+          attributes: ["id"],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id"],
+            },
+          ],
+        },
+        {
+          model: User,
+          as: "Likers",
+          attributes: ["id"],
+        },
+        {
+          model: Intro,
+          attributes: ["id"],
+        },
+      ],
     });
     res.status(200).json(posts);
   } catch(error) {
