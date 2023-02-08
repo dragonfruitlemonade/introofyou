@@ -52,7 +52,7 @@ router.get('/', async (req, res, next) => {
 router.get("/intros", isLoggedIn, async (req, res, next) => {
   try {
     if (req.user) {
-      const intros = await Intro.findOne({
+      const intros = await Intro.findAll({
         where: { id: req.user.id },
           attributes: [
             "field",
