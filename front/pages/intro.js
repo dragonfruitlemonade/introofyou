@@ -3,14 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import Router from "next/router"
 import { Form, Input, Button, Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_MY_INFO_REQUEST } from "../reducers/user";
+import { LOAD_MY_INFO_REQUEST, INTRO_WRITE_REQUEST, LOAD_MY_INTRO_REQUEST  } from "../reducers/user";
 import { END } from "redux-saga";
 import axios from "axios";
 import wrapper from "../store/configureStore";
 
 import IndexLayout from "../components/IndexLayout";
 import useInput from "../hooks/useInput";
-import { INTRO_WRITE_REQUEST, LOAD_MY_INTRO_REQUEST } from "../reducers/user";
 
 const Intro = () => {
   const dispatch = useDispatch();
