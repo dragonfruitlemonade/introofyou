@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       job: {
         type: DataTypes.STRING(10),
-        allowNull: false,
       },
       call: {
         type: DataTypes.STRING(30),

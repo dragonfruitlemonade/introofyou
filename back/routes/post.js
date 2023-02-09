@@ -9,8 +9,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.create({
       content: req.body.content,
-      UserId: req.user.id,
-      IntroId: req.user.id, //
+      UserId: req.user.id, 
     });
     const fullPost = await Post.findOne({
       where: { id: post.id },
@@ -31,10 +30,6 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         {
           model: User, // 좋아요 누른 사람
           as: "Likers",
-          attributes: ["id"],
-        },
-        {
-          model: Intro,
           attributes: ["id"],
         },
       ],
